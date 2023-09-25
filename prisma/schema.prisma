@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id       String  @unique
+  username String? @unique
+  top      Player? @relation("top", fields: [topId], references: [id])
+  topId    Int?
+  jgl      Player? @relation("jgl", fields: [jglId], references: [id])
+  jglId    Int?
+  mid      Player? @relation("mid", fields: [midId], references: [id])
+  midId    Int?
+  adc      Player? @relation("adc", fields: [adcId], references: [id])
+  adcId    Int?
+  supp     Player? @relation("supp", fields: [suppId], references: [id])
+  suppId   Int?
+
+  @@index([topId])
+  @@index([jglId])
+  @@index([midId])
+  @@index([adcId])
+  @@index([suppId])
+}
+
+model Player {
+  id   Int     @id @default(autoincrement())
+  name String  @unique
+  team String?
+  top  User[]  @relation("top")
+  jgl  User[]  @relation("jgl")
+  mid  User[]  @relation("mid")
+  adc  User[]  @relation("adc")
+  supp User[]  @relation("supp")
+}
