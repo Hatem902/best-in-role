@@ -8,35 +8,59 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model User {
-  id       String  @unique
-  username String? @unique
-  topId    Int?
-  jglId    Int?
-  midId    Int?
-  adcId    Int?
-  suppId   Int?
-  adc      Player? @relation("adc", fields: [adcId], references: [id])
-  jgl      Player? @relation("jgl", fields: [jglId], references: [id])
-  mid      Player? @relation("mid", fields: [midId], references: [id])
-  supp     Player? @relation("supp", fields: [suppId], references: [id])
-  top      Player? @relation("top", fields: [topId], references: [id])
+//I want to describe you a situation and then you will make the necessary prisma model (or models) for it. So, we have a user, and a user can optionally vote one of the toplane players as his best-in-role toplaner, one of the mid lane players as his best-in-role midlaner, one of the adc players as his best-in-role adc, one of the jungle  players as his best-in-role jungler, and one of the support players as his best-in-role support.
 
-  @@index([topId])
-  @@index([jglId])
-  @@index([midId])
-  @@index([adcId])
-  @@index([suppId])
+model User {
+  id        String  @unique
+  username  String? @unique
+  topPlayer Top?    @relation("top", fields: [top], references: [id])
+  top       String?
+  jglPlayer Jgl?    @relation("jgl", fields: [jgl], references: [id])
+  jgl       String?
+  midPlayer Mid?    @relation("mid", fields: [mid], references: [id])
+  mid       String?
+  adcPlayer Adc?    @relation("adc", fields: [adc], references: [id])
+  adc       String?
+  supPlayer Sup?    @relation("sup", fields: [sup], references: [id])
+  sup       String?
 }
 
-model Player {
-  id     Int     @id @default(autoincrement())
+model Top {
+  id     String  @id @default(cuid())
   name   String  @unique
   team   String?
   region String
-  adc    User[]  @relation("adc")
-  jgl    User[]  @relation("jgl")
-  mid    User[]  @relation("mid")
-  supp   User[]  @relation("supp")
-  top    User[]  @relation("top")
+  users  User[]  @relation("top")
+}
+
+model Jgl {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  team   String?
+  region String
+  users  User[]  @relation("jgl")
+}
+
+model Mid {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  team   String?
+  region String
+  users  User[]  @relation("mid")
+}
+
+model Adc {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  team   String?
+  region String
+  users  User[]  @relation("adc")
+}
+
+model Sup {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  team   String?
+  region String
+  users  User[]  @relation("sup")
 }
