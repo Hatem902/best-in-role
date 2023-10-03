@@ -1,9 +1,17 @@
-import { authMiddleware } from '@clerk/nextjs';
+import { authMiddleware } from "@clerk/nextjs";
 
-export default authMiddleware({});
+export default authMiddleware({
+  //TODO: add current-user middleware
+  /* async afterAuth(auth, request) {
+    const { userId } = auth;
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+    const user = await clerkClient.users.getUser(userId);
+    return NextResponse.next()
+  }, */
+});
 
 export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
-
-// See https://clerk.com/docs/nextjs/middleware for more information about configuring your middleware

@@ -1,48 +1,82 @@
 "use client";
-import { ModeToggle } from "@/components/mode-toggle";
-import { PlayersWithVoteCounts } from "@/functions/data-transformers";
-import { db } from "@/lib/db";
-import { userPatchSchema } from "@/lib/validations";
-import { Player, User } from "@prisma/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import * as z from "zod";
+import React from "react";
+import ReactCountryFlag from "react-country-flag";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandTitle,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import { roles } from "@/config";
+import { useVoteMutation, useVotesQuery } from "@/hooks/queries";
+import { PlayerCard } from "@/components/player-card";
 
 export default function Home() {
-  const { isLoading: isLoadingUsers, data: users } = useQuery({
-    queryKey: ["users_data"],
-    queryFn: async () => (await axios.get("/api/users/")).data,
-  });
-  const { isLoading: isLoadingPlayersRaw, data: players } = useQuery({
-    queryKey: ["players_data"],
-    queryFn: async () => (await axios.get("/api/players/")).data,
-  });
-  const { isLoading: isLoadingPlayers, data: playersWithVoteCounts } = useQuery(
-    {
-      queryKey: ["players_with_vote_counts_data"],
-      queryFn: () =>
-        PlayersWithVoteCounts(users as User[], players as Player[]),
-      enabled: !!(users && players),
-      initialData: undefined,
-    },
-  );
-
-  const { isLoading: isLoadingVote, mutate: Vote } = useMutation({
-    mutationFn: async (vote: z.infer<typeof userPatchSchema>) =>
-      (await axios.patch("/api/users", vote)).data,
-  });
-
+  const { isLoading: isLoadingVotes, data: votes } = useVotesQuery();
   return (
-    <main>
-      {/* <button
-        onClick={() => {
-          Vote({ midId: 1 });
-        }}
-        className="bg-slate-100 "
-      >
-        Vote Test
-      </button> */}
-      <ModeToggle />
-    </main>
+    <>
+      <main className=" -mt-12 flex w-full  justify-center space-x-2.5 px-0.5 3xl:space-x-4">
+        {roles.map((role, index) => (
+          <div key={role}>
+            <h2
+              className={cn(
+                "pb-3 pt-7 text-3xl font-bold tracking-tight",
+                index !== 0 && "invisible",
+              )}
+            >
+              Your Best in Role Pick&apos;ems
+            </h2>
+            <Command className="h-fit w-full   max-w-[20rem] border border-ring shadow-md">
+              <PlayerCard
+                nullablePlayer={votes?.user[role]}
+                isInLadder={false}
+                role={role}
+                votedPlayerId={votes?.user[role]?.id}
+              ></PlayerCard>
+            </Command>
+            <h2
+              className={cn(
+                "pb-3 pt-7 text-3xl font-bold tracking-tight",
+                index !== 0 && "invisible",
+              )}
+            >
+              Best in Role Leader Board
+            </h2>
+            <Command
+              className="w-full max-w-[20rem] rounded-lg border shadow-md"
+              key={role}
+            >
+              <CommandTitle>{role.toUpperCase()}</CommandTitle>
+              <CommandInput
+                placeholder={cn(
+                  "Search your best-in-role ",
+                  role.toUpperCase(),
+                )}
+              />
+              <CommandList>
+                <CommandEmpty>No Players found.</CommandEmpty>
+                <CommandGroup>
+                  {votes?.players[role].map((player) => (
+                    <PlayerCard
+                      nullablePlayer={player}
+                      isInLadder={true}
+                      role={role}
+                      votedPlayerId={votes.user[role]?.id}
+                      key={player.id}
+                    />
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </div>
+        ))}
+      </main>
+    </>
   );
 }

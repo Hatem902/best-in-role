@@ -1,9 +1,10 @@
 import z from "zod";
 
-export const userPatchSchema = z.object({
-  topId: z.number().optional(),
-  jglId: z.number().optional(),
-  midId: z.number().optional(),
-  adcId: z.number().optional(),
-  suppId: z.number().optional(),
-});
+/* const roleSchemas = roles.map((role) =>
+  z.object({ [`${role}Id` as keyof typeof roles]: z.number() }),
+); */
+//TODO: fix typescript errors (It has to do with new versions of dependencies?)
+// @ts-ignore
+/* export const userVoteSchema = z.union(roleSchemas); */
+
+export const userRolePatchSchema = z.number();
