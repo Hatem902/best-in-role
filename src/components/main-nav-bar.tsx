@@ -4,8 +4,8 @@ import { ModeToggle } from "./mode-toggle";
 const MainNavBar = () => {
   return (
     <>
-      <UserButton afterSignOutUrl="/" />
-      <ModeToggle />
+      {/* <UserButton afterSignOutUrl="/" />
+      <ModeToggle /> */}
     </>
   );
 };

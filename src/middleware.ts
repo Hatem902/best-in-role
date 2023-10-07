@@ -1,7 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-  //TODO: add current-user middleware
+  //TODO: add middlewares for repeated route handlers code
   /* async afterAuth(auth, request) {
     const { userId } = auth;
     if (!userId) {

@@ -1,17 +1,35 @@
 "use client";
 import * as React from "react";
 import ReactCountryFlag from "react-country-flag";
-import { CommandItem, CommandSeparator } from "@/components/ui/command";
+import {
+  CommandGroup,
+  CommandItem,
+  CommandSeparator,
+} from "@/components/ui/command";
 import { cn, Modify } from "@/lib/utils";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { useRemoveVoteMutation, useVoteMutation } from "@/hooks/queries";
-import { PlayerWithVoteStats } from "@/types/votes";
+import { PlayerWithVoteStats } from "@/types/player";
 import { roles } from "@/config";
+import {
+  LucideArrowBigUp,
+  LucideArrowBigUpDash,
+  LucideArrowUp,
+  LucideArrowUp01,
+  LucideArrowUpCircle,
+  LucideArrowUpDown,
+  LucideArrowUpFromDot,
+  LucideArrowUpFromLine,
+  LucideArrowUpNarrowWide,
+  LucideArrowUpSquare,
+  LucideArrowUpToLine,
+  LucideArrowUpWideNarrow,
+} from "lucide-react";
 
 interface inLadderPlayerCardProps
   extends React.HtmlHTMLAttributes<HTMLDivElement> {
   nullablePlayer: PlayerWithVoteStats;
-  votedPlayerId: number;
+  votedPlayerId: string | undefined;
   role: (typeof roles)[number];
   isInLadder: true;
 }
@@ -21,7 +39,7 @@ interface notInLadderPlayerCardProps
     inLadderPlayerCardProps,
     {
       nullablePlayer: PlayerWithVoteStats | undefined;
-      votedPlayerId: number | undefined;
+      votedPlayerId: string | undefined;
       isInLadder: false;
     }
   > {}
@@ -35,75 +53,130 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
     { nullablePlayer, votedPlayerId, role, isInLadder, className, ...props },
     ref,
   ) => {
-    const { isLoading: isLoadingVote, mutate: Vote } = useVoteMutation();
+    const { isLoading: isLoadingVote, mutate: Vote } = useVoteMutation(role);
     const { isLoading: isLoadingRemoveVote, mutate: RemoveVote } =
-      useRemoveVoteMutation();
+      useRemoveVoteMutation(role);
     const player = nullablePlayer!;
 
     return (
-      <div
-        className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-        onClick={
-          nullablePlayer
-            ? player.id === votedPlayerId
-              ? () => RemoveVote(role)
-              : () =>
-                  Vote({
-                    role,
-                    playerId: player.id,
-                  })
-            : undefined
-        }
-        {...props}
-        ref={ref}
-      >
-        <CommandItem
-          className={cn(
-            ((isInLadder && votedPlayerId === nullablePlayer.id) ||
-              (!isInLadder && !nullablePlayer)) &&
-              "border border-ring",
-          )}
-        >
-          {isInLadder || (!isInLadder && nullablePlayer) ? (
-            /* TODO: Remove nullablePlayer! and only user player param as is. assertion (it's there due to typescript inference bug?) */
-            <div className="flex w-full items-center justify-between">
-              <div className="flex w-full space-x-3">
-                <ReactCountryFlag
-                  countryCode={player.region}
-                  svg
-                  style={{
-                    width: "4em",
-                    height: "4em",
-                  }}
-                  title="US"
-                  className="max-w-[2em] pb-[1.3rem] 3xl:max-w-none 3xl:pb-0"
-                />
+      <>
+        {/*Todo: use hights and widhts instead of paddings so that if the children change, the total card widghts and hights stay the same. Then remove code repition by moving the ternaries to the deepest children */}
+        {!isInLadder && !nullablePlayer ? (
+          <div {...props} ref={ref}>
+            <CommandGroup>
+              <CommandItem
+                className={cn(
+                  "relative cursor-default ",
+                  isInLadder ? "pb-3.5" : "pb-[1.375rem]",
+                )}
+              >
+                <p className="absolute left-0 right-0 m-auto flex items-center justify-center pb-2 text-xs text-muted-foreground">
+                  No Vote
+                </p>
 
-                <div className="flex w-full flex-col justify-center">
-                  <div className="flex justify-between">
-                    <CardTitle className="mr-1.5 max-w-[12rem]">
-                      {player.team} {player.name}
-                      {/*  T T T E ST TES TT */}
-                    </CardTitle>
-                    <CardTitle>#{player.rank}</CardTitle>
-                  </div>
-                  <div className="flex justify-between">
-                    <CardDescription className="text-highlight">
-                      Votes : {player.voteCount}
-                    </CardDescription>
-                    <CardDescription>
-                      {player.votePercentage.toFixed(2)}%
-                    </CardDescription>
+                <div className="invisible flex  w-full items-start space-x-3.5">
+                  <ReactCountryFlag
+                    countryCode="eu"
+                    svg
+                    style={{
+                      width: "2.8em",
+                      height: "2.8em",
+                    }}
+                    title="EU"
+                    className="pb-2"
+                  />
+
+                  <div className="flex w-full flex-col justify-center">
+                    <div className="flex justify-between text-sm font-medium leading-none">
+                      <p className="mr-1.5 max-w-[14rem]">G2 Berserker</p>
+                      <p>#1</p>
+                    </div>
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <p>Votes : 200</p>
+                      <p>2.00%</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          ) : (
-            <CardDescription className="">Pick {role}</CardDescription>
-          )}
-        </CommandItem>
-        {isInLadder && <CommandSeparator />}
-      </div>
+              </CommandItem>
+            </CommandGroup>
+            {isInLadder && <CommandSeparator />}
+          </div>
+        ) : (
+          <div
+            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+            onClick={
+              nullablePlayer
+                ? player.id === votedPlayerId
+                  ? () => RemoveVote()
+                  : () => Vote(player.id)
+                : undefined
+            }
+            {...props}
+            ref={ref}
+          >
+            <CommandGroup
+            /* className={cn(
+                ((isInLadder && votedPlayerId === nullablePlayer.id) ||
+                  (!isInLadder && nullablePlayer)) &&
+                  "bg-accent text-accent-foreground",
+            
+              )} */
+            >
+              <CommandItem
+                className={cn(
+                  isInLadder &&
+                    votedPlayerId === nullablePlayer.id &&
+                    "bg-accent/40 text-accent-foreground",
+                  isInLadder ? "pb-3.5" : "pb-[1.375rem]",
+                )}
+              >
+                {isInLadder || (!isInLadder && nullablePlayer) ? (
+                  /* TODO: Remove const player = nullablePlayer! and only user player param as is. assertion (it's there due to typescript inference bug?) */
+                  <div className="flex w-full  items-start space-x-3.5">
+                    <ReactCountryFlag
+                      countryCode={player.region}
+                      svg
+                      style={{
+                        width: "2.8em",
+                        height: "2.8em",
+                      }}
+                      title={player.region.toUpperCase()}
+                      className="pb-2"
+                    />
+
+                    <div className="flex w-full flex-col justify-center">
+                      <div className="flex justify-between text-sm font-medium leading-none">
+                        <p className="mr-1.5 max-w-[14rem]">
+                          {player.team} {player.name}
+                        </p>
+                        <p>#{player.rank}</p>
+                      </div>
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <p>
+                          {/*TODO: animate-bounce-timed */}
+                          <LucideArrowUp
+                            className={cn(
+                              "-ml-0.5 -mt-0.5 mr-0.5 inline h-3.5 w-3.5",
+                              votedPlayerId === player.id &&
+                                "animate-bounce-timed text-highlight",
+                            )}
+                          />
+                          {player.voteCount} vote
+                          <span>{player.voteCount !== 1 && "s"}</span>
+                        </p>
+                        <p>{player.votePercentage.toFixed(2)}%</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <CardDescription>Pick {role}</CardDescription>
+                )}
+              </CommandItem>
+            </CommandGroup>
+            {isInLadder && <CommandSeparator />}
+          </div>
+        )}
+      </>
     );
   },
 );

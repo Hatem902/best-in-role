@@ -25,11 +25,11 @@ export default function RootLayout({
           <body className={inter.className}>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
+              defaultTheme="dark"
               enableSystem
               disableTransitionOnChange
             >
-              <div className="bg-background flex min-h-screen flex-col  ">
+              <div className="flex min-h-screen flex-col bg-background  ">
                 <MainNavBar /> {children}
               </div>
             </ThemeProvider>
