@@ -23,7 +23,10 @@ export default function Home() {
         const { data: userVote } = useUserVoteQuery(role);
         const roleImage = require(`@/assets/images/roles/${role}.png`);
         return (
-          <div className="flex w-full  max-w-[19.5rem] flex-col" key={role}>
+          <div
+            className="flex w-full max-w-[19.5rem] flex-col 3xl:max-w-[19.5rem]"
+            key={role}
+          >
             <CardHeader
               className={cn(
                 " whitespace-nowrap",

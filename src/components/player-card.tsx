@@ -11,20 +11,7 @@ import { CardDescription, CardTitle } from "@/components/ui/card";
 import { useRemoveVoteMutation, useVoteMutation } from "@/hooks/queries";
 import { PlayerWithVoteStats } from "@/types/player";
 import { roles } from "@/config";
-import {
-  LucideArrowBigUp,
-  LucideArrowBigUpDash,
-  LucideArrowUp,
-  LucideArrowUp01,
-  LucideArrowUpCircle,
-  LucideArrowUpDown,
-  LucideArrowUpFromDot,
-  LucideArrowUpFromLine,
-  LucideArrowUpNarrowWide,
-  LucideArrowUpSquare,
-  LucideArrowUpToLine,
-  LucideArrowUpWideNarrow,
-} from "lucide-react";
+import { LucideArrowUp } from "lucide-react";
 
 interface inLadderPlayerCardProps
   extends React.HtmlHTMLAttributes<HTMLDivElement> {
@@ -60,7 +47,7 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
 
     return (
       <>
-        {/*Todo: use hights and widhts instead of paddings so that if the children change, the total card widghts and hights stay the same. Then remove code repition by moving the ternaries to the deepest children */}
+        {/*TODO: use hights and widhts instead of paddings so that if the children change, the total card widghts and hights stay the same. Then remove code repition by moving the ternaries to the deepest children */}
         {!isInLadder && !nullablePlayer ? (
           <div {...props} ref={ref}>
             <CommandGroup>
@@ -146,14 +133,13 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
 
                     <div className="flex w-full flex-col justify-center">
                       <div className="flex justify-between text-sm font-medium leading-none">
-                        <p className="mr-1.5 max-w-[14rem]">
+                        <p className="mr-1.5 max-w-[15rem]">
                           {player.team} {player.name}
                         </p>
                         <p>#{player.rank}</p>
                       </div>
                       <div className="flex justify-between text-sm text-muted-foreground">
                         <p>
-                          {/*TODO: animate-bounce-timed */}
                           <LucideArrowUp
                             className={cn(
                               "-ml-0.5 -mt-0.5 mr-0.5 inline h-3.5 w-3.5",
