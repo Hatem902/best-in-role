@@ -17,20 +17,17 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="my-4 flex  w-full justify-center space-x-1.5 px-0.5 ">
+    <main className=" -my-2  flex w-full max-w-fit space-x-1.5   px-6 3xl:my-0 3xl:py-4">
       {roles.map((role, index) => {
         const { data: players } = usePlayersQuery(role);
         const { data: userVote } = useUserVoteQuery(role);
         const roleImage = require(`@/assets/images/roles/${role}.png`);
         return (
-          <div
-            className="flex w-full max-w-[19.5rem] flex-col 3xl:max-w-[19.5rem]"
-            key={role}
-          >
+          <div className="flex w-[19.5rem] flex-col" key={role}>
             <CardHeader
               className={cn(
-                " whitespace-nowrap",
-                index !== 0 && "collapse overflow-x-clip",
+                "whitespace-nowrap",
+                index !== 0 && "invisible overflow-x-clip",
               )}
             >
               <CardTitle>Your Best in Role Pick&apos;ems</CardTitle>
@@ -43,7 +40,7 @@ export default function Home() {
                 vote.
               </CardDescription>
             </CardHeader>
-            <Command className="h-fit w-full    border shadow-md">
+            <Command className="h-fit w-full border shadow-md">
               <PlayerCard
                 nullablePlayer={userVote}
                 isInLadder={false}
@@ -54,7 +51,7 @@ export default function Home() {
             <CardHeader
               className={cn(
                 "whitespace-nowrap",
-                index !== 0 && "collapse overflow-x-clip",
+                index !== 0 && "invisible overflow-x-clip",
               )}
             >
               <CardTitle>Best in Role Leader Board</CardTitle>

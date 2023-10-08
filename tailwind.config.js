@@ -17,7 +17,7 @@ module.exports = {
     },
     extend: {
       screens: {
-        "3xl": "1607px",
+        "3xl": "1652px",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -77,5 +77,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
 };
