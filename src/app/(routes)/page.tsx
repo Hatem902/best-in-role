@@ -16,11 +16,14 @@ import { LucideMousePointerClick } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
+  //TODO: move these inside the component PlayerCard because that's where they're supposed to live.
+  const playerQueries = roles.map((role) => usePlayersQuery(role));
+  const userVoteQueries = roles.map((role) => useUserVoteQuery(role));
   return (
     <main className=" -my-2  flex w-full max-w-fit space-x-1.5   px-6 3xl:my-0 3xl:py-4">
       {roles.map((role, index) => {
-        const { data: players } = usePlayersQuery(role);
-        const { data: userVote } = useUserVoteQuery(role);
+        const { data: players } = playerQueries[index];
+        const { data: userVote } = userVoteQueries[index];
         const roleImage = require(`@/assets/images/roles/${role}.png`);
         return (
           <div className="flex w-[19.5rem] flex-col" key={role}>
