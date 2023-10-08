@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/command";
 import { cn, Modify } from "@/lib/utils";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import { useRemoveVoteMutation, useVoteMutation } from "@/hooks/queries";
 import { PlayerWithVoteStats } from "@/types/player";
 import { roles } from "@/config";
 import { LucideArrowUp } from "lucide-react";
+import { useRemoveVoteMutation, useVoteMutation } from "@/hooks/queries";
 
 interface inLadderPlayerCardProps
   extends React.HtmlHTMLAttributes<HTMLDivElement> {
@@ -40,13 +40,12 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
     { nullablePlayer, votedPlayerId, role, isInLadder, className, ...props },
     ref,
   ) => {
-    const { isLoading: isLoadingVote, mutate: Vote } = useVoteMutation(role);
-    const { isLoading: isLoadingRemoveVote, mutate: RemoveVote } =
-      useRemoveVoteMutation(role);
+    const { mutate: Vote } = useVoteMutation(role);
+    const { mutate: RemoveVote } = useRemoveVoteMutation(role);
     const player = nullablePlayer!;
 
     return (
-      <>
+      <div className={className}>
         {/*TODO: use hights and widhts instead of paddings so that if the children change, the total card widghts and hights stay the same. Then remove code repition by moving the ternaries to the deepest children */}
         {!isInLadder && !nullablePlayer ? (
           <div {...props} ref={ref}>
@@ -63,24 +62,24 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
 
                 <div className="invisible flex  w-full items-start space-x-3.5">
                   <ReactCountryFlag
-                    countryCode="eu"
+                    countryCode="us"
                     svg
                     style={{
                       width: "2.8em",
                       height: "2.8em",
                     }}
-                    title="EU"
+                    title="US"
                     className="pb-2"
                   />
 
                   <div className="flex w-full flex-col justify-center">
                     <div className="flex justify-between text-sm font-medium leading-none">
-                      <p className="mr-1.5 max-w-[14rem]">G2 Berserker</p>
-                      <p>#1</p>
+                      <p className="mr-1.5 max-w-[14rem]">No vote</p>
+                      <p>No vote</p>
                     </div>
                     <div className="flex justify-between text-sm text-muted-foreground">
-                      <p>Votes : 200</p>
-                      <p>2.00%</p>
+                      <p>No vote</p>
+                      <p>No vote</p>
                     </div>
                   </div>
                 </div>
@@ -101,14 +100,7 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
             {...props}
             ref={ref}
           >
-            <CommandGroup
-            /* className={cn(
-                ((isInLadder && votedPlayerId === nullablePlayer.id) ||
-                  (!isInLadder && nullablePlayer)) &&
-                  "bg-accent text-accent-foreground",
-            
-              )} */
-            >
+            <CommandGroup>
               <CommandItem
                 className={cn(
                   isInLadder &&
@@ -162,7 +154,7 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
             {isInLadder && <CommandSeparator />}
           </div>
         )}
-      </>
+      </div>
     );
   },
 );
