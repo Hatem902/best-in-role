@@ -1,5 +1,5 @@
 // @ts-nocheck
-//TODO: make the onMutation functions typesafe then remove @ts-nocheck. (Everything else is already typesafe.)
+//TODO: make the onMutation functions typesafe then remove @ts-nocheck. (Everything else in this file is already typesafe.)
 "use client";
 import { roles } from "@/config";
 import { updatePlayers, updatePlayersRemoveVote } from "@/lib/utils";

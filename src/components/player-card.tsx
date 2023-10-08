@@ -45,49 +45,9 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
     const player = nullablePlayer!;
 
     return (
-      <div className={className}>
-        {/*TODO: use hights and widhts instead of paddings so that if the children change, the total card widghts and hights stay the same. Then remove code repition by moving the ternaries to the deepest children */}
-        {!isInLadder && !nullablePlayer ? (
-          <div {...props} ref={ref}>
-            <CommandGroup>
-              <CommandItem
-                className={cn(
-                  "relative cursor-default ",
-                  isInLadder ? "pb-3.5" : "pb-[1.375rem]",
-                )}
-              >
-                <p className="absolute left-0 right-0 m-auto flex items-center justify-center pb-2 text-xs text-muted-foreground">
-                  No Vote
-                </p>
-
-                <div className="invisible flex  w-full items-start space-x-3.5">
-                  <ReactCountryFlag
-                    countryCode="us"
-                    svg
-                    style={{
-                      width: "2.8em",
-                      height: "2.8em",
-                    }}
-                    title="US"
-                    className="pb-2"
-                  />
-
-                  <div className="flex w-full flex-col justify-center">
-                    <div className="flex justify-between text-sm font-medium leading-none">
-                      <p className="mr-1.5 max-w-[14rem]">No vote</p>
-                      <p>No vote</p>
-                    </div>
-                    <div className="flex justify-between text-sm text-muted-foreground">
-                      <p>No vote</p>
-                      <p>No vote</p>
-                    </div>
-                  </div>
-                </div>
-              </CommandItem>
-            </CommandGroup>
-            {isInLadder && <CommandSeparator />}
-          </div>
-        ) : (
+      <div className={className} {...props} ref={ref}>
+        {/*TODO: use hights and widhts instead of paddings so that if the children change, the total card widghts and hights stay the same. Then remove code repetition by moving the ternaries to the deepest children */}
+        {isInLadder || nullablePlayer ? (
           <div
             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
             onClick={
@@ -97,8 +57,6 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
                   : () => Vote(player.id)
                 : undefined
             }
-            {...props}
-            ref={ref}
           >
             <CommandGroup>
               <CommandItem
@@ -149,6 +107,46 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
                 ) : (
                   <CardDescription>Pick {role}</CardDescription>
                 )}
+              </CommandItem>
+            </CommandGroup>
+            {isInLadder && <CommandSeparator />}
+          </div>
+        ) : (
+          <div>
+            <CommandGroup>
+              <CommandItem
+                className={cn(
+                  "relative cursor-default ",
+                  isInLadder ? "pb-3.5" : "pb-[1.375rem]",
+                )}
+              >
+                <p className="absolute left-0 right-0 m-auto flex items-center justify-center pb-2 text-xs text-muted-foreground">
+                  No Vote
+                </p>
+
+                <div className="invisible flex  w-full items-start space-x-3.5">
+                  <ReactCountryFlag
+                    countryCode="us"
+                    svg
+                    style={{
+                      width: "2.8em",
+                      height: "2.8em",
+                    }}
+                    title="US"
+                    className="pb-2"
+                  />
+
+                  <div className="flex w-full flex-col justify-center">
+                    <div className="flex justify-between text-sm font-medium leading-none">
+                      <p className="mr-1.5 max-w-[14rem]">No vote</p>
+                      <p>No vote</p>
+                    </div>
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <p>No vote</p>
+                      <p>No vote</p>
+                    </div>
+                  </div>
+                </div>
               </CommandItem>
             </CommandGroup>
             {isInLadder && <CommandSeparator />}
