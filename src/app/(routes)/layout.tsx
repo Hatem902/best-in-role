@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { dark } from "@clerk/themes";
 import "@/styles/globals.css";
 import { ReactQueryProvider, ThemeProvider } from "@/client-providers";
 import { cn } from "@/lib/utils";
@@ -9,8 +9,9 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Best In Role",
-  description: "Vote for your best in role League of legends pro-players !",
+  title: "Best in Role - LOL - Worlds 2023 Pro Players Leader Board",
+  description:
+    "Discover the top Pro Players in each role —Top, Jungle, Mid, AD Carry, and Support— and vote for your favourites now! | League of Legends Worlds 2023.",
 };
 
 export default function RootLayout({
@@ -20,11 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <ReactQueryProvider>
-      <ClerkProvider>
+      <ClerkProvider
+        appearance={{
+          baseTheme: dark,
+        }}
+      >
         <html lang="en">
           <body
             className={cn(
-              "scrollbar scrollbar-thumb-foreground/60 scrollbar-track-background scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-0.5 scrollbar-h-0.5 hover:scrollbar-thumb-accent-foreground hover:scrollbar-track-accent",
+              "scrollbar scrollbar-track-background scrollbar-thumb-foreground/60 scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-0.5 scrollbar-h-0.5 hover:scrollbar-track-accent hover:scrollbar-thumb-accent-foreground",
               inter.className,
             )}
           >

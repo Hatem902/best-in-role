@@ -138,12 +138,12 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
 
                   <div className="flex w-full flex-col justify-center">
                     <div className="flex justify-between text-sm font-medium leading-none">
-                      <p className="mr-1.5 max-w-[14rem]">No vote</p>
-                      <p>No vote</p>
+                      <p className="mr-1.5 max-w-[14rem]">Team & Name</p>
+                      <p>Rank</p>
                     </div>
                     <div className="flex justify-between text-sm text-muted-foreground">
-                      <p>No vote</p>
-                      <p>No vote</p>
+                      <p>Votes</p>
+                      <p>%</p>
                     </div>
                   </div>
                 </div>

@@ -34,13 +34,13 @@ const RoleColumn = React.forwardRef<
           role !== "top" && "invisible overflow-x-clip",
         )}
       >
-        <CardTitle>Your Best in Role Pick&apos;ems</CardTitle>
+        <CardTitle>Your Best in Role Pick&apos;ems for Worlds 2023</CardTitle>
         <CardDescription className=" ">
           Click
           <span>
             <LucideMousePointerClick className="mx-1 inline h-4 w-4" />
           </span>
-          on a player from the Best in Role Leader Board, in order to vote.
+          on a pro-player from the Best in Role Leader Board, in order to vote.
         </CardDescription>
       </CardHeader>
       <Command className="h-fit w-full border shadow-md">
@@ -57,9 +57,9 @@ const RoleColumn = React.forwardRef<
           role !== "top" && "invisible overflow-x-clip",
         )}
       >
-        <CardTitle>Best in Role Leader Board</CardTitle>
+        <CardTitle>Best in Role Leader Board - Worlds 2023 </CardTitle>
         <CardDescription>
-          All Worlds 2023 players from the most voted to the least voted.
+          All Worlds 2023 pro-players from the most voted to the least voted.
         </CardDescription>
       </CardHeader>
       <Command className="w-full  rounded-lg border shadow-md">
@@ -68,7 +68,7 @@ const RoleColumn = React.forwardRef<
             src={`/assets/images/roles/${role}.png`}
             width={23}
             height={23}
-            alt={role}
+            alt={`The best ${role} pro-players at the League of Legends Worlds 2023, ranked by the number of votes they received.`}
           />
         </CommandTitle>
         <CommandInput placeholder={`Search ${role}...`} />

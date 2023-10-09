@@ -25,7 +25,7 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+  <h3 className="flex items-center border-b px-3" cmdk-input-wrapper="">
     <Search className="mr-2 h-3.5 w-3.5 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
@@ -35,7 +35,7 @@ const CommandInput = React.forwardRef<
       )}
       {...props}
     />
-  </div>
+  </h3>
 ));
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
@@ -44,14 +44,14 @@ const CommandTitle = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   return (
-    <div
+    <h2
       ref={ref}
       className={cn(
         "flex w-full items-center justify-center border-b px-3",
         className,
       )}
       {...props}
-    ></div>
+    ></h2>
   );
 });
 CommandTitle.displayName = "CommandTitle";
