@@ -29,7 +29,7 @@ export default function RootLayout({
         <html lang="en">
           <body
             className={cn(
-              "scrollbar scrollbar-track-background scrollbar-thumb-foreground/60 scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-0.5 scrollbar-h-0.5 hover:scrollbar-track-accent hover:scrollbar-thumb-accent-foreground",
+              "scrollbar scrollbar-track-background scrollbar-thumb-foreground/20 scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-1.5 scrollbar-h-1.5 hover:scrollbar-track-accent hover:scrollbar-thumb-accent-foreground",
               inter.className,
             )}
           >
@@ -39,7 +39,7 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <div className="  flex min-h-screen   flex-col  items-center bg-background">
+              <div className="flex min-h-screen   flex-col  items-center bg-background">
                 {/* <MainNavBar /> */} {children}
               </div>
             </ThemeProvider>
