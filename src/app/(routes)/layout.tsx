@@ -32,6 +32,7 @@ export default function RootLayout({
               "scrollbar scrollbar-track-background scrollbar-thumb-foreground/20 scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-1.5 scrollbar-h-1.5 hover:scrollbar-track-accent hover:scrollbar-thumb-accent-foreground",
               inter.className,
             )}
+            style={{ scrollbarGutter: "stable both-edges" }}
           >
             <ThemeProvider
               attribute="class"

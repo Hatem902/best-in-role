@@ -23,11 +23,7 @@ const RoleColumn = React.forwardRef<
   const { data: userVote } = useUserVoteQuery(role);
   return (
     <div
-      className={cn(
-        "flex w-[19.5rem] flex-col",
-        role === "top" ? "pl-6" : role === "sup" ? "pr-6" : "",
-        className,
-      )}
+      className={cn("flex w-[19.5rem] flex-col", className)}
       key={role}
       ref={ref}
       {...props}
