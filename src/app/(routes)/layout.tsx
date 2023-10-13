@@ -28,11 +28,11 @@ export default function RootLayout({
       >
         <html lang="en">
           <body
+            //TODO: scrollbar on-hover color is distracting, make it less light.
             className={cn(
-              "scrollbar scrollbar-track-background scrollbar-thumb-foreground/20 scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-1.5 scrollbar-h-1.5 hover:scrollbar-track-accent hover:scrollbar-thumb-accent-foreground",
+              "scrollbar-thumb-scrollbars hover:scrollbar-track-scrollbars-accent hover:scrollbar-thumb-scrollbars-accent-foreground scrollbar scrollbar-track-background scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-2 scrollbar-h-2",
               inter.className,
             )}
-            style={{ scrollbarGutter: "stable both-edges" }}
           >
             <ThemeProvider
               attribute="class"
@@ -40,8 +40,8 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <div className="flex min-h-screen   flex-col  items-center bg-background">
-                {/* <MainNavBar /> */} {children}
+              <div className="flex min-h-screen flex-col items-center bg-background ">
+                {children}
               </div>
             </ThemeProvider>
           </body>

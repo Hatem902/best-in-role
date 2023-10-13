@@ -63,7 +63,7 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
                 className={cn(
                   isInLadder &&
                     votedPlayerId === nullablePlayer.id &&
-                    "bg-accent/40 text-accent-foreground",
+                    "bg-playercard_low_accent text-accent-foreground",
                   isInLadder ? "pb-3.5" : "pb-[1.375rem]",
                 )}
               >

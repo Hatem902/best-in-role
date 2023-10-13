@@ -18,7 +18,7 @@ module.exports = {
     extend: {
       screens: {
         desktop: "1652px",
-        laptop: ""
+        xxl: "1600px",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -55,12 +55,35 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        scrollbars: {
+          DEFAULT: "hsla(var(--foreground)/var(--scrollbars-opacity))",
+          accent: {
+            DEFAULT: "hsla(var(--accent)/var(--scrollbars-hovered-opacity))",
+            foreground:
+              "hsla(var(--accent-foreground)/var(--scrollbars-hovered-opacity))",
+          },
+        },
+        playercard_low_accent:
+          "hsla(var(--accent)/var(--playercard-selected-opacity))",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      //TODO: make opacity flexible
+      /* opacity: {
+        sheet_trigger: {
+          DEFAULT: "var(--sheet-trigger-opacity)",
+          accente: "var(--sheet-trigger-hovered-opacity)",
+        },
+      }, */
+      opacity: {
+        sheettrigger: "var(--sheettrigger-opacity)",
+        sheettrigger_accent: "var(--sheettrigger-hovered-opacity)",
+      },
+
       keyframes: {
         "accordion-down": {
           from: { height: 0 },

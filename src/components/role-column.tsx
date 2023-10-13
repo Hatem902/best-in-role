@@ -90,4 +90,4 @@ const RoleColumn = React.forwardRef<
 });
 RoleColumn.displayName = "RoleColumn";
 
-export { RoleColumn };
+export default RoleColumn;

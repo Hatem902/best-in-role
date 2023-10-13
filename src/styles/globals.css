@@ -8,7 +8,7 @@
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
-    --highlight: 0 85.1% 39%;
+    --highlight: 0 70% 35%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
@@ -25,6 +25,12 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.5rem;
+    --scrollbars-opacity: 0.2;
+    --scrollbars-hovered-opacity: 0.3;
+    --playercard-selected-opacity: 1;
+    /*TODO: for sheettrigger, it's better to use new defined colors than opacities of already defined colors, because the component is positioned absolute */
+    --sheettrigger-opacity: 0.4;
+    --sheettrigger-hovered-opacity: 0.6;
   }
 
   .dark {
@@ -48,6 +54,11 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+    --scrollbars-opacity: 0.1;
+    --scrollbars-hovered-opacity: 0.2;
+    --playercard-selected-opacity: 0.4;
+    --sheettrigger-opacity: 0.6;
+    --sheettrigger-hovered-opacity: 0.9;
   }
 }
 
