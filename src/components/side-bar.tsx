@@ -13,7 +13,7 @@ export default async function SideBar() {
   const user: User | null = await currentUser();
   return (
     <Sheet>
-      <SheetTrigger className="opacity-sheettrigger hover:opacity-sheettrigger_accent fixed right-4 top-4 z-50 cursor-pointer border border-transparent p-1  transition-all hover:rounded-full hover:border-inherit hover:bg-accent hover:bg-opacity-100 hover:text-accent-foreground hover:backdrop-blur-sm">
+      <SheetTrigger className="fixed right-4 top-4 z-50 cursor-pointer border border-transparent p-1 opacity-sheettrigger transition-all  hover:rounded-full hover:border-inherit hover:bg-accent hover:bg-opacity-100 hover:text-accent-foreground hover:opacity-sheettrigger_accent hover:backdrop-blur-sm">
         <LucideMoreHorizontal />
       </SheetTrigger>
       <SheetContent className="flex flex-col justify-between pt-28">

@@ -28,9 +28,9 @@ export default function RootLayout({
       >
         <html lang="en">
           <body
-            //TODO: scrollbar on-hover color is distracting, make it less light.
             className={cn(
-              "scrollbar-thumb-scrollbars hover:scrollbar-track-scrollbars-accent hover:scrollbar-thumb-scrollbars-accent-foreground scrollbar scrollbar-track-background scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-2 scrollbar-h-2",
+              /*TODO: instead of pl-2, switch to scrollbar-gutter: stable both-edges; (not supported yet?) */
+              "pl-2 scrollbar scrollbar-track-background scrollbar-thumb-scrollbars scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-2 scrollbar-h-2 hover:scrollbar-track-scrollbars-accent hover:scrollbar-thumb-scrollbars-accent-foreground",
               inter.className,
             )}
           >
@@ -40,7 +40,7 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <div className="flex min-h-screen flex-col items-center bg-background ">
+              <div className="flex min-h-screen min-w-max justify-center  bg-background">
                 {children}
               </div>
             </ThemeProvider>

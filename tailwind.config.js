@@ -17,8 +17,9 @@ module.exports = {
     },
     extend: {
       screens: {
-        desktop: "1652px",
-        xxl: "1600px",
+        laptop: "1370px",
+        laptop_sm: "1280px",
+        desktop: "1540px",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -72,13 +73,7 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      //TODO: make opacity flexible
-      /* opacity: {
-        sheet_trigger: {
-          DEFAULT: "var(--sheet-trigger-opacity)",
-          accente: "var(--sheet-trigger-hovered-opacity)",
-        },
-      }, */
+
       opacity: {
         sheettrigger: "var(--sheettrigger-opacity)",
         sheettrigger_accent: "var(--sheettrigger-hovered-opacity)",
