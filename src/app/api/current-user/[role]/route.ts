@@ -14,14 +14,13 @@ interface Params {
 export async function GET(request: Request, { params: { role } }: Params) {
   try {
     const { userId } = getAuth(request as NextRequest);
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
+
+    // User in public route but not signed in.
+    if (!userId) return NextResponse.json(null);
     const user = await db.user.findFirst({ where: { id: userId } });
 
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+    //User hasn't voted yet.
+    if (!user) return NextResponse.json({ id: null });
 
     let players =
       //TODO:db[param] not supported by ts/prisma?
@@ -44,7 +43,7 @@ export async function GET(request: Request, { params: { role } }: Params) {
     const playerIndex = players.findIndex((player) => player.id === user[role]);
     return NextResponse.json(
       playerIndex === -1
-        ? null
+        ? { id: null }
         : {
             ...players[playerIndex],
             rank: playerIndex + 1,

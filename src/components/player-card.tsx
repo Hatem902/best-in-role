@@ -6,42 +6,49 @@ import {
   CommandItem,
   CommandSeparator,
 } from "@/components/ui/command";
-import { cn, Modify } from "@/lib/utils";
-import { CardDescription, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { CardDescription } from "@/components/ui/card";
 import { PlayerWithVoteStats } from "@/types/player";
 import { roles } from "@/config";
 import { LucideArrowUp } from "lucide-react";
 import { useRemoveVoteMutation, useVoteMutation } from "@/hooks/queries";
+import { useSignIn } from "@clerk/nextjs";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
-interface inLadderPlayerCardProps
-  extends React.HtmlHTMLAttributes<HTMLDivElement> {
-  nullablePlayer: PlayerWithVoteStats;
+import dynamic from "next/dynamic";
+
+const Auth = dynamic(() => import("@/components/auth"));
+
+interface PlayerCardProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
+  nullablePlayer: PlayerWithVoteStats | undefined;
   votedPlayerId: string | undefined;
   role: (typeof roles)[number];
-  isInLadder: true;
+  isInLadder: boolean;
+  userIsSignedIn: boolean;
 }
 
-interface notInLadderPlayerCardProps
-  extends Modify<
-    inLadderPlayerCardProps,
-    {
-      nullablePlayer: PlayerWithVoteStats | undefined;
-      votedPlayerId: string | undefined;
-      isInLadder: false;
-    }
-  > {}
-
-export type PlayerCardProps =
-  | inLadderPlayerCardProps
-  | notInLadderPlayerCardProps;
-
-const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
+const PlayerCardContent = React.forwardRef<HTMLDivElement, PlayerCardProps>(
   (
-    { nullablePlayer, votedPlayerId, role, isInLadder, className, ...props },
+    {
+      nullablePlayer,
+      votedPlayerId,
+      role,
+      isInLadder,
+      userIsSignedIn,
+      className,
+      ...props
+    },
     ref,
   ) => {
     const { mutate: Vote } = useVoteMutation(role);
     const { mutate: RemoveVote } = useRemoveVoteMutation(role);
+    const { signIn } = useSignIn();
+    const signInWithGoogle = () =>
+      signIn?.authenticateWithRedirect({
+        strategy: "oauth_google",
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/",
+      });
     const player = nullablePlayer!;
 
     return (
@@ -51,10 +58,12 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
           <div
             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
             onClick={
-              nullablePlayer
-                ? player.id === votedPlayerId
-                  ? () => RemoveVote()
-                  : () => Vote(player.id)
+              userIsSignedIn
+                ? nullablePlayer
+                  ? player.id === votedPlayerId
+                    ? () => RemoveVote()
+                    : () => Vote(player.id)
+                  : undefined
                 : undefined
             }
           >
@@ -62,7 +71,7 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
               <CommandItem
                 className={cn(
                   isInLadder &&
-                    votedPlayerId === nullablePlayer.id &&
+                    votedPlayerId === player.id &&
                     "bg-playercard_low_accent text-accent-foreground",
                   isInLadder ? "pb-3.5" : "pb-[1.375rem]",
                 )}
@@ -153,6 +162,36 @@ const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
           </div>
         )}
       </div>
+    );
+  },
+);
+PlayerCardContent.displayName = "PlayerCardContent";
+
+const PlayerCard = React.forwardRef<HTMLDivElement, PlayerCardProps>(
+  ({ userIsSignedIn, isInLadder, ...props }, ref) => {
+    return (
+      <>
+        {userIsSignedIn || !isInLadder ? (
+          <PlayerCardContent
+            userIsSignedIn={userIsSignedIn}
+            isInLadder={isInLadder}
+            {...props}
+            ref={ref}
+          />
+        ) : (
+          <Dialog>
+            <DialogTrigger asChild>
+              <PlayerCardContent
+                userIsSignedIn={userIsSignedIn}
+                isInLadder={isInLadder}
+                {...props}
+                ref={ref}
+              />
+            </DialogTrigger>
+            <Auth />
+          </Dialog>
+        )}
+      </>
     );
   },
 );

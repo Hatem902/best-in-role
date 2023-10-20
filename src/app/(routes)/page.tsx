@@ -1,7 +1,7 @@
 import { roles } from "@/config";
 import RoleColumn from "@/components/role-column";
 import SideBar from "@/components/side-bar";
-//TODO: Lazy load the side bar since it's hidden at first render anyways.
+//TODO: Lazy load the side bar since it's hidden at first render anyways. Currently there's an issue with dynamically importing an async component.
 /* const SideBar = dynamic(() => import("@/components/side-bar")); */
 
 export default async function BestInRole() {

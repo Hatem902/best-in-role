@@ -14,6 +14,8 @@ import { usePlayersQuery, useUserVoteQuery } from "@/hooks/queries";
 import { PlayerCard } from "@/components/player-card";
 import { LucideMousePointerClick } from "lucide-react";
 import Image from "next/image";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import Auth from "./auth";
 
 const RoleColumn = React.forwardRef<
   HTMLDivElement,
@@ -31,24 +33,37 @@ const RoleColumn = React.forwardRef<
       <CardHeader
         className={cn(
           "whitespace-nowrap",
-          role !== "top" && "invisible overflow-x-clip",
+          role !== "top" ? "invisible z-50 overflow-x-clip" : "z-40",
         )}
       >
         <CardTitle>Your Best in Role Pick&apos;ems for Worlds 2023</CardTitle>
-        <CardDescription className=" ">
+        <CardDescription>
           Click
           <span>
             <LucideMousePointerClick className="mx-1 inline h-4 w-4" />
           </span>
           on a pro-player from the Best in Role Leader Board, in order to vote.
+          {userVote === null && (
+            <span>
+              {" "}
+              <Dialog>
+                <DialogTrigger className="underline underline-offset-4 hover:text-primary">
+                  Sign-in
+                </DialogTrigger>
+                <Auth />
+              </Dialog>{" "}
+              is required.
+            </span>
+          )}
         </CardDescription>
       </CardHeader>
       <Command className="h-fit w-full border shadow-md">
         <PlayerCard
-          nullablePlayer={userVote}
+          nullablePlayer={userVote?.id ? userVote : undefined}
           isInLadder={false}
           role={role}
           votedPlayerId={userVote?.id}
+          userIsSignedIn={userVote !== null}
         ></PlayerCard>
       </Command>
       <CardHeader
@@ -81,6 +96,7 @@ const RoleColumn = React.forwardRef<
               role={role}
               votedPlayerId={userVote?.id}
               key={player.id}
+              userIsSignedIn={userVote !== null}
             />
           ))}
         </CommandList>

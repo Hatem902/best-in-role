@@ -17,9 +17,8 @@ module.exports = {
     },
     extend: {
       screens: {
-        laptop: "1370px",
-        laptop_sm: "1280px",
-        desktop: "1540px",
+        laptop: "1368px",
+        desktop: "1536px",
       },
       colors: {
         border: "hsl(var(--border))",

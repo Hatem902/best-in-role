@@ -8,7 +8,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export type Modify<T, R> = Omit<T, keyof R> & R;
 export type DeepPartial<T> = T extends object
   ? {
       [P in keyof T]?: DeepPartial<T[P]>;
@@ -23,6 +22,21 @@ export function sortByVoteCountAndName(players: PlayerWithVoteStats[]) {
     }
     return voteCountDifference;
   });
+}
+
+export function rankPlayersByVoteCount(players: PlayerWithVoteStats[]) {
+  let rank = 1;
+  let prevVoteCount = players[0].voteCount;
+
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i];
+    if (i > 0 && player.voteCount !== prevVoteCount) {
+      rank = i + 1;
+    }
+
+    player.rank = rank;
+    prevVoteCount = player.voteCount;
+  }
 }
 
 //TODO: Move the updatePlayer functions directly into the onMutate functions in the queries.ts file. Utils is not the right place for this.
@@ -48,12 +62,11 @@ export function updatePlayers(
     ]);
     const totalVotes = players.reduce((acc, curr) => acc + curr.voteCount, 0);
 
-    players.forEach((player, index) => {
+    players.forEach((player) => {
       player.votePercentage =
         totalVotes === 0 ? 0 : (player.voteCount / totalVotes) * 100;
-      player.rank = index + 1;
     });
-
+    rankPlayersByVoteCount(players);
     return { updatedPlayers: players, updatedVotedPlayer: votedPlayer };
   } else {
     let votedPlayer = oldPlayers.find((player) => player.id === playerId);
@@ -67,12 +80,11 @@ export function updatePlayers(
     ]);
     const totalVotes = players.reduce((acc, curr) => acc + curr.voteCount, 0);
 
-    players.forEach((player, index) => {
+    players.forEach((player) => {
       player.votePercentage =
         totalVotes === 0 ? 0 : (player.voteCount / totalVotes) * 100;
-      player.rank = index + 1;
     });
-
+    rankPlayersByVoteCount(players);
     return { updatedPlayers: players, updatedVotedPlayer: votedPlayer };
   }
 }
@@ -93,13 +105,12 @@ export function updatePlayersRemoveVote(
     ]);
     const totalVotes = players.reduce((acc, curr) => acc + curr.voteCount, 0);
 
-    players.forEach((player, index) => {
+    players.forEach((player) => {
       player.votePercentage =
         totalVotes === 0 ? 0 : (player.voteCount / totalVotes) * 100;
-      player.rank = index + 1;
     });
-
-    return { updatedPlayers: players, updatedVotedPlayer: null };
+    rankPlayersByVoteCount(players);
+    return { updatedPlayers: players, updatedVotedPlayer: { id: null } };
   } else {
     return null;
   }

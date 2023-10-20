@@ -3,26 +3,30 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
-
-//I want to describe you a situation and then you will make the necessary prisma model (or models) for it. So, we have a user, and a user can optionally vote one of the toplane players as his best-in-role toplaner, one of the mid lane players as his best-in-role midlaner, one of the adc players as his best-in-role adc, one of the jungle  players as his best-in-role jungler, and one of the support players as his best-in-role support.
 
 model User {
   id        String  @unique
   username  String? @unique
-  topPlayer Top?    @relation("top", fields: [top], references: [id])
-  top       String?
-  jglPlayer Jgl?    @relation("jgl", fields: [jgl], references: [id])
-  jgl       String?
-  midPlayer Mid?    @relation("mid", fields: [mid], references: [id])
-  mid       String?
-  adcPlayer Adc?    @relation("adc", fields: [adc], references: [id])
   adc       String?
-  supPlayer Sup?    @relation("sup", fields: [sup], references: [id])
+  jgl       String?
+  mid       String?
   sup       String?
+  top       String?
+  adcPlayer Adc?    @relation("adc", fields: [adc], references: [id])
+  jglPlayer Jgl?    @relation("jgl", fields: [jgl], references: [id])
+  midPlayer Mid?    @relation("mid", fields: [mid], references: [id])
+  supPlayer Sup?    @relation("sup", fields: [sup], references: [id])
+  topPlayer Top?    @relation("top", fields: [top], references: [id])
+
+  @@index([adc])
+  @@index([jgl])
+  @@index([mid])
+  @@index([sup])
+  @@index([top])
 }
 
 model Top {
@@ -47,6 +51,8 @@ model Mid {
   team   String?
   region String
   users  User[]  @relation("mid")
+
+  @@map("Midlane")
 }
 
 model Adc {

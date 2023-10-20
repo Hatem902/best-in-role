@@ -1,6 +1,6 @@
 import { roles } from "@/config";
 import { db } from "@/lib/db";
-import { sortByVoteCountAndName } from "@/lib/utils";
+import { rankPlayersByVoteCount, sortByVoteCountAndName } from "@/lib/utils";
 import { PlayerWithVoteStats } from "@/types/player";
 import { NextResponse } from "next/server";
 
@@ -33,7 +33,7 @@ export async function GET(request: Request, { params: { role } }: Params) {
       totalVotes === 0 ? 0 : (player.voteCount / totalVotes) * 100;
   });
 
-  players.forEach((player, index) => (player.rank = index + 1));
+  rankPlayersByVoteCount(players);
 
   return NextResponse.json(players as PlayerWithVoteStats[]);
 }

@@ -14,7 +14,7 @@ export const usePlayersQuery = (role: (typeof roles)[number]) =>
     queryKey: [role, "players"],
     queryFn: async (): Promise<PlayerWithVoteStats[]> =>
       (await axios.get(`/api/${role}`)).data,
-    //TODO: when we're at a point where we can afford more DB Data transfer costs, we can turn refetchInterval on for live updates.
+    //TODO: Test the DB costs with live updates on, and adjust the interval accordingly.
     /* refetchInterval: 5000, */
   });
 
@@ -67,6 +67,8 @@ export const useRemoveVoteMutation = (role: (typeof roles)[number]) => {
       (await axios.delete(`/api/current-user/${role}`)).data,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [role] });
+
+      //TODO: find a solution that uses the cache directly instead of the last returned query data.This is to avoid the case where the user votes twice very fast and the optimistic update will use the old data for the second vote instead of the updated data from the first vote.
       const oldPlayers = queryClient.getQueryData([role, "players"]);
       const oldUserVote = queryClient.getQueryData([role, "user_vote"]);
 
@@ -75,8 +77,8 @@ export const useRemoveVoteMutation = (role: (typeof roles)[number]) => {
         oldUserVote?.id,
       );
 
-      queryClient.setQueryData([role, "players"], () => updatedPlayers);
-      queryClient.setQueryData([role, "user_vote"], () => updatedVotedPlayer);
+      queryClient.setQueryData([role, "players"], updatedPlayers);
+      queryClient.setQueryData([role, "user_vote"], updatedVotedPlayer);
 
       // Return a context object with the snapshotted value
       return { oldPlayers, oldUserVote };

@@ -1,4 +1,5 @@
 import { authMiddleware } from "@clerk/nextjs";
+import { roles } from "./config";
 
 export default authMiddleware({
   //TODO: add middlewares for repeated route handlers code
@@ -10,6 +11,11 @@ export default authMiddleware({
     const user = await clerkClient.users.getUser(userId);
     return NextResponse.next()
   }, */
+  publicRoutes: [
+    "/",
+    "/sso-callback",
+    ...roles.flatMap((role) => [`/api/${role}`, `/api/current-user/${role}`]),
+  ],
 });
 
 export const config = {

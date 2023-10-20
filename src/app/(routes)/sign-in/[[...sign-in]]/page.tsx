@@ -1,21 +1,18 @@
 "use client";
-import { SignIn, useSignIn } from "@clerk/nextjs";
+import Auth from "@/components/auth";
+import { Dialog } from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
 
 export default function Page() {
-  const { signIn, isLoaded } = useSignIn();
-  if (!isLoaded) {
-    return null;
-  }
-  const signInWithGoogle = () =>
-    signIn.authenticateWithRedirect({
-      strategy: "oauth_google",
-      redirectUrl: "/sso-callback",
-      redirectUrlComplete: "/",
-    });
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
   return (
-    <main className="mt-[20vh]">
-      <SignIn />
-      <button onClick={signInWithGoogle}>Sign in with Google</button>
+    <main>
+      <Dialog open={isOpen}>
+        <Auth />
+      </Dialog>
     </main>
   );
 }
