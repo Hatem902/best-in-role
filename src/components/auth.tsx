@@ -12,7 +12,7 @@ import SignInButton from "@/components/sign-in-button";
 const Auth = () => {
   return (
     <DialogContent>
-      <div className="container relative  grid h-[800px]  w-max items-center justify-center px-0 md:grid lg:max-w-none lg:grid-cols-2">
+      <div className="container relative  grid h-[516px] w-max items-center  justify-center px-0 md:grid lg:max-w-none lg:grid-cols-2 laptop_sm:h-[548px] laptop:h-[620px] desktop:h-[800px]">
         <div className="relative order-2 flex h-full  flex-col overflow-hidden bg-muted  p-10 text-white dark:border-t lg:order-none dark:lg:border-r ">
           <Image
             src="/assets/images/auth-bg.jpg"

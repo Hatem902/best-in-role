@@ -17,7 +17,6 @@ module.exports = {
     },
     extend: {
       screens: {
-        mobile: "484px",
         laptop_sm: "1284px",
         laptop: "1368px",
         desktop: "1540px",
