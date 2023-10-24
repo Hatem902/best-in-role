@@ -13,7 +13,7 @@ const Auth = () => {
   return (
     <DialogContent>
       <div className="container relative  grid h-[516px] w-max items-center  justify-center px-0 md:grid lg:max-w-none lg:grid-cols-2 laptop_sm:h-[548px] laptop:h-[620px] desktop:h-[800px]">
-        <div className="relative order-2 flex h-full  flex-col overflow-hidden bg-muted  p-10 text-white dark:border-t lg:order-none dark:lg:border-r ">
+        <div className="relative order-2 hidden h-full  flex-col overflow-hidden bg-muted  p-10 text-white dark:border-t mobile:flex lg:order-none dark:lg:border-r  ">
           <Image
             src="/assets/images/auth-bg.jpg"
             alt="Authentication"
@@ -37,8 +37,8 @@ const Auth = () => {
             </blockquote>
           </div>
         </div>
-        <div className="lg:p-8">
-          <div className="mx-auto flex  w-[350px] flex-col justify-center space-y-6">
+        <div className="p-4 mobile:p-8 lg:p-8">
+          <div className="mx-auto flex w-[316px]  flex-col justify-center space-y-6 mobile:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Sign in &nbsp;&&nbsp; Vote
@@ -61,8 +61,8 @@ const Auth = () => {
                     <div>
                       <LucideBookLock className="h-16 w-16 text-muted " />
                     </div>
-                    <div className="max-w-prose space-y-1 text-sm text-muted-foreground">
-                      <p className="">
+                    <div className=" max-w-[15.2rem] space-y-1 text-sm text-muted-foreground mobile:max-w-prose">
+                      <p>
                         • To counteract instances of cheating, botting, and
                         spam-voting associated with a single player, and to
                         ensure that users can only cast one vote per role, we

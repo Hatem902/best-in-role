@@ -57,7 +57,7 @@ const RoleColumn = React.forwardRef<
           )}
         </CardDescription>
       </CardHeader>
-      <CardHeader className=" items-center mobile:hidden">
+      <CardHeader className=" mb-0.5 items-center mobile:hidden">
         <CardTitle>Your BiR {role.toUpperCase()} for Worlds 2023</CardTitle>
         <CardDescription className="text-center">
           {userVote === null && (

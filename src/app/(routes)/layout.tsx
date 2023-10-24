@@ -30,7 +30,7 @@ export default function RootLayout({
           <body
             className={cn(
               /*TODO: instead of pl-1.5, switch to scrollbar-gutter: stable both-edges; (not supported yet?) */
-              "pl-2 scrollbar scrollbar-track-background scrollbar-thumb-scrollbars scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-2 scrollbar-h-2 hover:scrollbar-track-scrollbars-accent hover:scrollbar-thumb-scrollbars-accent-foreground desktop:pl-1.5",
+              "pl-0 scrollbar scrollbar-track-background scrollbar-thumb-scrollbars scrollbar-corner-background scrollbar-thumb-rounded-full scrollbar-w-2 scrollbar-h-2 hover:scrollbar-track-scrollbars-accent hover:scrollbar-thumb-scrollbars-accent-foreground mobile:pl-2 desktop:pl-1.5",
               inter.className,
             )}
           >
