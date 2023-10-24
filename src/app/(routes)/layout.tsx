@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import "@/styles/globals.css";
 import { ReactQueryProvider, ThemeProvider } from "@/client-providers";
 import { cn } from "@/lib/utils";
@@ -24,11 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <ReactQueryProvider>
-      <ClerkProvider
-        appearance={{
-          baseTheme: dark,
-        }}
-      >
+      <ClerkProvider>
         <html lang="en">
           <body
             className={cn(
