@@ -32,7 +32,7 @@ const RoleColumn = React.forwardRef<
     >
       <CardHeader
         className={cn(
-          "whitespace-nowrap",
+          "hidden whitespace-nowrap mobile:flex",
           role !== "top" ? "invisible z-50 overflow-x-clip" : "z-40",
         )}
       >
@@ -43,6 +43,23 @@ const RoleColumn = React.forwardRef<
             <LucideMousePointerClick className="mx-1 inline h-4 w-4" />
           </span>
           on a pro-player from the Best in Role Leader Board, in order to vote.
+          {userVote === null && (
+            <span>
+              {" "}
+              <Dialog>
+                <DialogTrigger className="underline underline-offset-4 hover:text-primary">
+                  Sign-in
+                </DialogTrigger>
+                <Auth />
+              </Dialog>{" "}
+              is required.
+            </span>
+          )}
+        </CardDescription>
+      </CardHeader>
+      <CardHeader className=" items-center mobile:hidden">
+        <CardTitle>Your BiR {role.toUpperCase()} for Worlds 2023</CardTitle>
+        <CardDescription className="text-center">
           {userVote === null && (
             <span>
               {" "}
@@ -68,7 +85,7 @@ const RoleColumn = React.forwardRef<
       </Command>
       <CardHeader
         className={cn(
-          "whitespace-nowrap",
+          "hidden  whitespace-nowrap mobile:flex",
           role !== "top" && "invisible overflow-x-clip",
         )}
       >
