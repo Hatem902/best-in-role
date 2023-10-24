@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "Best in Role - LOL - Worlds 2023 Pro Players Leader Board",
   description:
     "Discover the top Pro Players in each role —Top, Jungle, Mid, AD Carry, and Support— and vote for your favourites now! | League of Legends Worlds 2023.",
+  verification: {
+    google: "LxjrDqkahaYcgRy3Cjq1oxJIOiaK5j5Ix_cb-9hQ0uI",
+  },
 };
 
 export default function RootLayout({
