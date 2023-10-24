@@ -39,7 +39,7 @@ const MobileBestInRole = () => {
         </SelectTrigger>
         <SelectContent align="center">
           {roles.map((role) => (
-            <SelectItem value={role}>
+            <SelectItem value={role} key={role}>
               <div className="flex justify-center self-start">
                 <Image
                   src={`/assets/images/roles/${role}.png`}
