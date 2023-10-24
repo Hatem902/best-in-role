@@ -19,7 +19,7 @@ const MobileBestInRole = () => {
   );
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   return (
-    <div className="flex w-fit flex-col items-center mobile:hidden">
+    <main className="mb-1 flex w-fit flex-col items-center mobile:hidden">
       <Select
         onValueChange={(value: (typeof roles)[number]) => setCurrentRole(value)}
         onOpenChange={() => {
@@ -63,7 +63,7 @@ const MobileBestInRole = () => {
       </Select>
 
       <RoleColumn role={currentRole} />
-    </div>
+    </main>
   );
 };
 
