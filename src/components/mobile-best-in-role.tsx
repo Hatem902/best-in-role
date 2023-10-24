@@ -11,17 +11,24 @@ import {
 import { roles } from "@/config";
 import RoleColumn from "./role-column";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const MobileBestInRole = () => {
   const [currentRole, setCurrentRole] = useState<(typeof roles)[number]>(
     roles[0],
   );
+  const [isOpen, setIsOpen] = useState<Boolean>(false);
   return (
     <div className="flex w-fit flex-col items-center mobile:hidden">
       <Select
         onValueChange={(value: (typeof roles)[number]) => setCurrentRole(value)}
+        onOpenChange={() => {
+          setIsOpen(!isOpen);
+        }}
       >
-        <SelectTrigger className="-mb-4 mt-5 w-[120px]">
+        <SelectTrigger
+          className={cn("-mb-4 mt-5 w-[120px]", isOpen && "mb-[10.4rem]")}
+        >
           <SelectValue
             placeholder={
               <div className="flex justify-center self-start">
