@@ -15,7 +15,7 @@ export const usePlayersQuery = (role: (typeof roles)[number]) =>
     queryFn: async (): Promise<PlayerWithVoteStats[]> =>
       (await axios.get(`/api/${role}`)).data,
     //TODO: Test the DB costs with live updates on, and adjust the interval accordingly.
-    /* refetchInterval: 5000, */
+    refetchInterval: 800,
   });
 
 export const useUserVoteQuery = (role: (typeof roles)[number]) =>
