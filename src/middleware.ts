@@ -15,7 +15,13 @@ export default authMiddleware({
     "/",
     "/sso-callback",
     "/sitemap.xml",
-    ...roles.flatMap((role) => [`/api/${role}`, `/api/current-user/${role}`]),
+    "/api/user/create",
+
+    ...roles.flatMap((role) => [
+      `/api/${role}`,
+      `/api/current-user/${role}`,
+      `/api/user/vote/${role}`,
+    ]),
   ],
 });
 
